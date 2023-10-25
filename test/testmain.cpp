@@ -35,12 +35,13 @@ TEST_CASE("test encode & decode") {
     uint8_t* buf = new uint8_t[1024 * 1024 * 10];
 
     size_t size = 1024 * 1024 * 10;
-    REQUIRE(encode(pf, buf, size));
+    REQUIRE(encode2(pf, buf, size));
 
     std::cout << "size: " << size << std::endl;
 
     PathFile pf2;
-    REQUIRE(decode(buf, size, pf2));
+    // REQUIRE(decode(buf, size, pf2));
+    REQUIRE(decode2(buf, size, pf2));
 
     // Check if the two PathFile objects are equal
 
@@ -65,6 +66,7 @@ TEST_CASE("test encode & decode") {
 }
 
 TEST_CASE("benchmark encode & decode") {
+    // SKIP("benchmark");
     PathFile pf;
 
     // make 100 random paths, with 100 to 1000 random waypoints
@@ -90,8 +92,13 @@ TEST_CASE("benchmark encode & decode") {
     uint8_t* buf = new uint8_t[1024 * 1024 * 10];
 
     size_t size = 1024 * 1024 * 10;
-    // BENCHMARK("encode") { encode(pf, buf, size); };
+    BENCHMARK("encode") { encode(pf, buf, size); };
+
+    BENCHMARK("encode2") { encode2(pf, buf, size); };
 
     PathFile pf2;
-    // BENCHMARK("decode") { decode(buf, size, pf2); };
+    BENCHMARK("decode") { decode(buf, size, pf2); };
+
+    PathFile pf3;
+    BENCHMARK("decode2") { decode2(buf, size, pf3); };
 }

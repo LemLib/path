@@ -33,8 +33,10 @@ class PathFile {
 };
 
 bool decode(const uint8_t* fileBuffer, const size_t fileSize, PathFile& output);
+bool decode2(const uint8_t* fileBuffer, const size_t fileSize, PathFile& output);
 
 bool encode(const PathFile& input, uint8_t* fileBuffer, size_t& fileSize);
+bool encode2(const PathFile& input, uint8_t* fileBuffer, size_t& fileSize);
 
 } // namespace PathFileSystem
 } // namespace lemlib
